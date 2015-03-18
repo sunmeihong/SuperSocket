@@ -13,11 +13,13 @@ namespace SuperSocket.QuickStart.CommandFilter
     {
         public override void OnCommandExecuting(CommandExecutingContext commandContext)
         {
+            Console.WriteLine(string.Format("{0}：LogTimeCommandFilter类中的OnCommandExecuting方法", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")));
             commandContext.Session.Items["StartTime"] = DateTime.Now;
         }
 
         public override void OnCommandExecuted(CommandExecutingContext commandContext)
         {
+            Console.WriteLine(string.Format("{0}：LogTimeCommandFilter类中的OnCommandExecuted方法", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")));
             var session = commandContext.Session;
             var startTime = session.Items.GetValue<DateTime>("StartTime");
             var ts = DateTime.Now.Subtract(startTime);

@@ -11,6 +11,7 @@ namespace SuperSocket.QuickStart.CommandFilter
     {
         public override void OnCommandExecuting(CommandExecutingContext commandContext)
         {
+            Console.WriteLine(string.Format("{0}：LoggedInValidationFilter类中的OnCommandExecuting方法", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")));
             var session = commandContext.Session as MyAppSession;
 
             //If the session is not logged in, cancel the executing of the command
@@ -20,7 +21,7 @@ namespace SuperSocket.QuickStart.CommandFilter
 
         public override void OnCommandExecuted(CommandExecutingContext commandContext)
         {
-
+            Console.WriteLine(string.Format("{0}：LoggedInValidationFilter类中的OnCommandExecuted方法", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")));
         }
     }
 }

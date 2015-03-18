@@ -18,9 +18,14 @@ namespace SuperSocket.QuickStart.CommandFilter
             var username = requestInfo.Parameters[0];
             var password = requestInfo.Parameters[1];
 
-            if("kerry".Equals(username) && "123456".Equals(password))
+            if ("kerry".Equals(username) && "123456".Equals(password))
             {
                 session.IsLoggedIn = true;
+                session.Send("reply: kerry success");
+            }
+            else
+            {
+                session.Send("reply: login failed");
             }
         }
     }

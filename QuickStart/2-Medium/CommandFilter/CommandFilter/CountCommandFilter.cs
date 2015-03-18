@@ -15,11 +15,12 @@ namespace SuperSocket.QuickStart.CommandFilter
 
         public override void OnCommandExecuting(CommandExecutingContext commandContext)
         {
-
+            Console.WriteLine(string.Format("{0}：CountCommandFilter类中的OnCommandExecuting方法", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")));
         }
 
         public override void OnCommandExecuted(CommandExecutingContext commandContext)
         {
+            Console.WriteLine(string.Format("{0}：CountCommandFilter类中的OnCommandExecuted方法", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")));
             Interlocked.Increment(ref m_Total);
         }
 
