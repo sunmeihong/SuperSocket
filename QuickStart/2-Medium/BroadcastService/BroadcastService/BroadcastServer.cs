@@ -11,10 +11,24 @@ namespace SuperSocket.QuickStart.BroadcastService
 {
     public class BroadcastServer : AppServer<BroadcastSession>
     {
+        /// <summary>
+        /// 广播集合，key是某一个广播，value是需要广播的对象
+        /// </summary>
         private Dictionary<string, List<string>> broadcastDict = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// 用于lock的对象  同步broadcastDict
+        /// </summary>
         private object broadcastSyncRoot = new object();
 
+        /// <summary>
+        /// session的集合,Key是C001,C002,C003以及V001,V002,V003这些
+        /// </summary>
         private Dictionary<string, BroadcastSession> broadcastSessionDict = new Dictionary<string, BroadcastSession>(StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// 用于lock的对象  同步broadcastSessionDict
+        /// </summary>
         private object syncRoot = new object();
 
         public BroadcastServer()
@@ -53,12 +67,18 @@ namespace SuperSocket.QuickStart.BroadcastService
 
         internal void BroadcastMessage(BroadcastSession session, string message)
         {
-            List<string> targetDeviceNumbers;
+            List<string> targetDeviceNumbers;//不需要初始化，作为out参数的时候
 
             lock (broadcastSyncRoot)
             {
-                if(!broadcastDict.TryGetValue(session.DeviceNumber, out targetDeviceNumbers))
+                //key: 要获取的值的键。
+                //value:当此方法返回值时，如果找到该键，便会返回与指定的键相关联的值；
+                //否则，则会返回 value 参数的类型默认值。该参数未经初始化即被传递。
+                bool flag = broadcastDict.TryGetValue(session.DeviceNumber, out targetDeviceNumbers);
+                if (flag == false)
+                {
                     return;
+                }
             }
 
             if (targetDeviceNumbers == null || targetDeviceNumbers.Count <= 0)
@@ -73,7 +93,9 @@ namespace SuperSocket.QuickStart.BroadcastService
                 foreach(var key in targetDeviceNumbers)
                 {
                     if (broadcastSessionDict.TryGetValue(key, out s))
+                    {
                         sessions.Add(s);
+                    }
                 }
             }
 
