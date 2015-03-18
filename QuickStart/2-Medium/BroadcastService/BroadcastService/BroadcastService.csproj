@@ -80,6 +80,7 @@
   <ItemGroup>
     <None Include="SuperSocket.SocketService.exe.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
